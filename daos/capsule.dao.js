@@ -35,7 +35,7 @@ const getCode = async (capsuleId) => {
     return capsule.code;
 };
 
-exports.selectCapsule = async (userId) => {
+exports.selectAllCapsule = async (userId) => {
     return Capsule.findAll({
         raw: true,
         include: {
@@ -45,4 +45,23 @@ exports.selectCapsule = async (userId) => {
             },
         },
     });
+};
+
+exports.selectCapsule = async (userId, capsuleId) => {
+    return Capsule.findOne({
+        where: {
+            id: capsuleId,
+        },
+        include: {
+            model: Member,
+            where: {
+                user_id: userId,
+            },
+        },
+    });
+};
+
+exports.updateAuthTime = async (capsule, authTime) => {
+    capsule.auth_time = authTime;
+    capsule.save();
 };
