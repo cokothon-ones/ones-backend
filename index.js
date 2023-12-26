@@ -8,6 +8,8 @@ const status = require('./config/response.status.js');
 const BaseError = require('./config/error.js');
 
 // const userRouter = require('./routes/user.route.js');
+const calsuleRouter = require('./routes/capsule.route.js');
+const memberRouter = require('./routes/member.route.js');
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // app.use('/user', userRouter);
+app.use('/capsule', calsuleRouter);
+app.use('/member', memberRouter);
 
 app.use((req, res, next) => {
     const err = new BaseError(status.NOT_FOUND);
