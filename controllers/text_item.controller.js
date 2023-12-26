@@ -1,14 +1,10 @@
-const { response } = require("../config/response");
+const { response } = require('../config/response');
+const { status } = require('../config/response.status');
 
-const { status } = require("../config/response.status");
-
-const { createTextItem } = require("../services/text_item.service");
+const { createTextItem } = require('../services/text_item.service');
 
 const makeTextItem = async (req, res, next) => {
-  res.send(
-    // response(status.SUCCESS, await createTextItem(req.user.id, req.body))
-    response(status.SUCCESS, await createTextItem(1, req.body))
-  );
+    res.send(response(status.SUCCESS, await createTextItem(req.user.id, req.body)));
 };
 
 module.exports = { makeTextItem };

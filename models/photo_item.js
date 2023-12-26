@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 
-class TextItem extends Sequelize.Model {
+class PhotoItem extends Sequelize.Model {
     static initiate(sequelize) {
-        TextItem.init(
+        PhotoItem.init(
             {
                 data: {
-                    type: Sequelize.STRING(1000),
+                    type: Sequelize.STRING(100),
                     allowNull: false,
                 },
             },
@@ -13,8 +13,8 @@ class TextItem extends Sequelize.Model {
                 sequelize,
                 timestamps: true,
                 underscored: true,
-                modelName: 'TextItem',
-                tableName: 'text_item',
+                modelName: 'PhotoItem',
+                tableName: 'photo_item',
                 paranoid: true,
                 charset: 'utf8',
                 collate: 'utf8_general_ci',
@@ -22,9 +22,9 @@ class TextItem extends Sequelize.Model {
         );
     }
     static associate(db) {
-        db.TextItem.belongsTo(db.Capsule, { foreignKey: 'capsule_id' });
-        db.TextItem.belongsTo(db.User, { foreignKey: 'user_id' });
+        db.PhotoItem.belongsTo(db.Capsule, { foreignKey: 'capsule_id' });
+        db.PhotoItem.belongsTo(db.User, { foreignKey: 'user_id' });
     }
 }
 
-module.exports = TextItem;
+module.exports = PhotoItem;

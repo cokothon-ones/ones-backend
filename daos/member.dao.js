@@ -56,3 +56,13 @@ exports.hasUnverifiedMember = async (capsuleId) => {
   });
   return !!member;
 };
+
+exports.hasUnverifiedMember = async (capsuleId) => {
+    const member = await Member.findOne({
+        where: {
+            capsule_id: capsuleId,
+            location_verified: 0,
+        },
+    });
+    return !!member;
+};
