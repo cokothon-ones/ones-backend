@@ -42,3 +42,9 @@ exports.login = (req, res, next) => {
     });
   })(req, res, next);
 };
+
+exports.logout = (req, res, next) => {
+  req.logout(() => {
+    res.send("logout success!");
+  });
+};
