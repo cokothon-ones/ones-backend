@@ -24,5 +24,3 @@ export const status = {
         message: 'fail: 이미 존재하는 사용자',
     },
 };
-
-module.exports = status;

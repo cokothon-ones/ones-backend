@@ -4,35 +4,15 @@ class User extends Sequelize.Model {
     static initiate(sequelize) {
         User.init(
             {
-                name: {
-                    type: Sequelize.STRING(10),
-                    allowNull: false,
-                },
-                gender: {
-                    type: Sequelize.STRING(10),
-                    allowNull: false,
-                },
-                birth: {
-                    type: Sequelize.DATE,
-                    allowNull: false,
-                },
-                address: {
-                    type: Sequelize.STRING(30),
-                    allowNull: false,
-                },
-                address_detail: {
-                    type: Sequelize.STRING(30),
-                    allowNull: true,
-                },
                 email: {
-                    type: Sequelize.STRING(30),
+                    type: Sequelize.STRING(50),
                     allowNull: false,
                     unique: true,
                 },
-                phone: {
-                    type: Sequelize.STRING(15),
+
+                password: {
+                    type: Sequelize.STRING(100),
                     allowNull: true,
-                    unique: true,
                 },
             },
             {
@@ -48,9 +28,7 @@ class User extends Sequelize.Model {
         );
     }
     static associate(db) {
-        // db.User.belongsToMany(db.FoodType, { through: 'UserFoodType' });
-        // db.User.belongsToMany(db.Mission, { through: db.UserMission });
-        // db.User.hasMany(db.Review, { foreignKey: 'user_id' });
+        db.User.hasMany(db.Member, { foreignKey: 'user_id' });
     }
 }
 
