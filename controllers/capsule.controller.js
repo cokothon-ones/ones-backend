@@ -8,7 +8,7 @@ const makeCapsule = async (req, res, next) => {
 };
 
 const fetchCapsule = async (req, res, next) => {
-    res.send(response(status.SUCCESS, await findCapsule(req.query)));
+    res.send(response(status.SUCCESS, await findCapsule(req.user.id)));
 };
 
 const authCapsule = async (req, res, next) => {

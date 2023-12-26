@@ -1,9 +1,10 @@
 const { status } = require('../config/response.status');
 const { BaseError } = require('../config/error');
 
-const { insertCapsule } = require('../daos/capsule.dao');
+const { insertCapsule, selectCapsule } = require('../daos/capsule.dao');
+const { findCapsuleResponseDTO } = require('../dtos/find-capsule.dto');
 
-const createCapsule = async (userId, body) => {
+exports.createCapsule = async (userId, body) => {
     try {
         const code = await insertCapsule(userId, body);
         //캡슐 잠금 시간이 되었을 때 item이 0개라면 삭제
@@ -15,20 +16,21 @@ const createCapsule = async (userId, body) => {
     }
 };
 
-const findCapsule = async (body) => {
+exports.findCapsule = async (userId) => {
     try {
+        const capsules = await selectCapsule(userId);
+        console.log(capsules);
+        return findCapsuleResponseDTO(capsules);
     } catch (err) {
         console.error(err);
         throw new BaseError(status.INTERNAL_SERVER_ERROR);
     }
 };
 
-const updateCapsule = async (body) => {
+exports.updateCapsule = async (body) => {
     try {
     } catch (err) {
         console.error(err);
         throw new BaseError(status.INTERNAL_SERVER_ERROR);
     }
 };
-
-module.exports = { createCapsule, findCapsule, updateCapsule };

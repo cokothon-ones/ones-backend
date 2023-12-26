@@ -34,3 +34,15 @@ const getCode = async (capsuleId) => {
     });
     return capsule.code;
 };
+
+exports.selectCapsule = async (userId) => {
+    return Capsule.findAll({
+        raw: true,
+        include: {
+            model: Member,
+            where: {
+                user_id: userId,
+            },
+        },
+    });
+};
