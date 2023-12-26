@@ -19,20 +19,13 @@ exports.insertCapsule = async (userId, data) => {
     return capsule;
 };
 
-exports.validateCode = async (capsuleId, userCode) => {
-    const code = await getCode(capsuleId);
-    return code == userCode;
-};
-
-const getCode = async (capsuleId) => {
-    const capsule = await Capsule.findOne({
+exports.validateCode = async (code) => {
+    return Capsule.findOne({
         raw: true,
         where: {
-            id: capsuleId,
+            code: code,
         },
-        attributes: ['code'],
     });
-    return capsule.code;
 };
 
 exports.selectAllCapsule = async (userId) => {
