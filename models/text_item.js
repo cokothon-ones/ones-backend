@@ -7,6 +7,8 @@ class TextItem extends Sequelize.Model {
         id: {
           type: Sequelize.INTEGER,
           allowNull: false,
+          primaryKey: true,
+          autoIncrement: true,
         },
         data: {
           type: Sequelize.STRING(1000),
@@ -26,7 +28,7 @@ class TextItem extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.TextItem.belongsTo(db.Capsule, { foreignKey: "capsule_id" });
+    // db.TextItem.belongsTo(db.Capsule, { foreignKey: "capsule_id" });
   }
 }
 
