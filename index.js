@@ -14,7 +14,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const passportConfig = require("./passport");
-//passportConfig();
+passportConfig();
 
 // routes 불러오기
 const authRouter = require("./routes/auth.route.js");

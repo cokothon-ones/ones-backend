@@ -9,7 +9,7 @@ exports.join = async (req, res, next) => {
   try {
     const exUser = await User.findOne({ where: { email } });
     if (exUser) {
-      throw new BaseError(status.CONFLICT);
+      throw new BaseError(status.LREADY_EXIST_MEMBER_ERROR);
     }
 
     const hash = await bcrypt.hash(password, 12); //숫자가 높을수록 보안에 좋지만 느려짐 12정도가 적당!
@@ -38,7 +38,7 @@ exports.login = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.redirect("/");
+      return res.send("success!");
     });
   })(req, res, next);
 };
