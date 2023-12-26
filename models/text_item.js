@@ -29,6 +29,7 @@ class TextItem extends Sequelize.Model {
   }
   static associate(db) {
     // db.TextItem.belongsTo(db.Capsule, { foreignKey: "capsule_id" });
+    // db.TextItem.belongsTo(db.User, { foreignKey: 'user_id' });
   }
 }
 
