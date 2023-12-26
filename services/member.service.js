@@ -12,7 +12,6 @@ const createMember = async (userId, params, body) => {
         if (err instanceof BaseError) {
             throw err;
         }
-        throw new BaseError(status.INTERNAL_SERVER_ERROR);
     }
 };
 

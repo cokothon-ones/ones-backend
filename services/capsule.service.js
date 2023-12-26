@@ -10,7 +10,7 @@ const createCapsule = async (userId, body) => {
         //캡슐 오픈 달이 지났는데 캡슐을 오픈하지 않았다면 삭제
         return code;
     } catch (err) {
-        console.error('catch 도착', err);
+        console.error(err);
         throw new BaseError(status.INTERNAL_SERVER_ERROR);
     }
 };
