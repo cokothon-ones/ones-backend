@@ -21,6 +21,14 @@ export const status = {
     },
     ALREADY_EXIST_MEMBER_ERROR: {
         status: StatusCodes.BAD_REQUEST,
-        message: 'fail: 이미 존재하는 사용자',
+        message: 'fail: 이미 존재하는 멤버',
+    },
+    INVALID_MEMBER_ERROR: {
+        status: StatusCodes.BAD_REQUEST,
+        message: 'fail: 존재하지 않는 멤버',
+    },
+    INSUFFICIENT_AUTHTIME_DIFFERENCE_ERROR: {
+        status: StatusCodes.BAD_REQUEST,
+        message: 'fail: 이전 인증 시작 시간과의 차이가 10분 미만',
     },
 };
