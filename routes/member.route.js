@@ -5,6 +5,6 @@ const { addMember } = require('../controllers/member.controller.js');
 
 const memberRouter = express.Router();
 
-memberRouter.post('/', asyncHandler(addMember));
+memberRouter.post('/:capsuleId', asyncHandler(addMember));
 
 module.exports = memberRouter;

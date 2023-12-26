@@ -3,9 +3,9 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 
 const { sequelize } = require('./models/index.js');
-const response = require('./config/response.js');
-const status = require('./config/response.status.js');
-const BaseError = require('./config/error.js');
+const { response } = require('./config/response.js');
+const { status } = require('./config/response.status.js');
+const { BaseError } = require('./config/error.js');
 
 // const userRouter = require('./routes/user.route.js');
 const calsuleRouter = require('./routes/capsule.route.js');

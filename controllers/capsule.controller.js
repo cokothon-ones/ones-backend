@@ -1,5 +1,5 @@
-const response = require('../config/response');
-const status = require('../config/response.status');
+const { response } = require('../config/response');
+const { status } = require('../config/response.status');
 
 const { createCapsule, findCapsule, updateCapsule } = require('../services/capsule.service');
 

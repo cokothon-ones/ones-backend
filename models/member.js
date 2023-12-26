@@ -24,6 +24,7 @@ class Member extends Sequelize.Model {
     }
     static associate(db) {
         db.Member.belongsTo(db.Capsule, { foreignKey: 'capsule_id' });
+        db.Member.belongsTo(db.User, { foreignKey: 'user_id' });
     }
 }
 

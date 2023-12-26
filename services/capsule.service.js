@@ -1,5 +1,5 @@
-const { BaseError } = require('sequelize');
-const status = require('../config/response.status');
+const { status } = require('../config/response.status');
+const { BaseError } = require('../config/error');
 
 const { insertCapsule } = require('../daos/capsule.dao');
 
