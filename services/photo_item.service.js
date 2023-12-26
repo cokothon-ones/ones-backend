@@ -1,18 +1,18 @@
-const PhotoItem = require("../models/photo_item");
+const { status } = require("../config/response.status");
+const { BaseError } = require("../config/error.js");
 
-class PhotoItemService {
-  static async createPhotoItem(photoContent) {
-    try {
-      // 아이템 생성
-      const createdPhotoItem = await PhotoItem.create({ data: photoContent });
+const { insertPhotoItem } = require("../daos/photo_item.dao");
 
-      return createdPhotoItem;
-    } catch (error) {
-      // 에러 처리: 생성 중 문제 발생 시 예외 처리
-      console.error("PhotoItem 생성 실패:", error);
-      throw new Error("PhotoItem 생성 실패");
+const createPhotoItem = async (userId, body) => {
+  try {
+    const item = await insertPhotoItem(userId, body.capsuleId, body.data);
+    return;
+  } catch (err) {
+    console.error(err);
+    if (err instanceof BaseError) {
+      throw err;
     }
   }
-}
+};
 
-module.exports = PhotoItemService;
+module.exports = { createPhotoItem };

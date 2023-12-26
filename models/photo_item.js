@@ -29,6 +29,7 @@ class PhotoItem extends Sequelize.Model {
   }
   static associate(db) {
     // db.PhotoItem.belongsTo(db.Capsule, { foreignKey: "capsule_id" });
+    // db.TextItem.belongsTo(db.User, { foreignKey: 'user_id' });
   }
 }
 
