@@ -19,8 +19,6 @@ const passportConfig = require("./passport");
 // routes 불러오기
 const authRouter = require("./routes/auth.route.js");
 
-dotenv.config();
-
 const app = express();
 
 app.set("port", process.env.PORT || 3000);
@@ -39,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
+    secret: "SESSION_SECRET",
     resave: false,
     saveUninitialized: false,
     cookie: {
