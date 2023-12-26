@@ -3,9 +3,14 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 const { sequelize } = require("./models/index.js");
-const response = require("./config/response.js");
-const status = require("./config/response.status.js");
-const BaseError = require("./config/error.js");
+const { response } = require("./config/response.js");
+const { status } = require("./config/response.status.js");
+const { BaseError } = require("./config/error.js");
+
+// const userRouter = require('./routes/user.route.js');
+const calsuleRouter = require("./routes/capsule.route.js");
+const memberRouter = require("./routes/member.route.js");
+const itemRouter = require("./routes/item.route.js");
 
 dotenv.config();
 
@@ -51,6 +56,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/auth", authRouter);
+app.use("/capsule", calsuleRouter);
+app.use("/member", memberRouter);
+app.use("/item", itemRouter);
 
 app.use((req, res, next) => {
   const err = new BaseError(status.NOT_FOUND);
