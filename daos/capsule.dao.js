@@ -1,4 +1,4 @@
-const { Capsule, Member } = require('../models');
+const { Capsule, Member, TextItem, PhotoItem } = require('../models');
 const { v4: uuidv4 } = require('uuid');
 
 exports.insertCapsule = async (userId, data) => {
@@ -11,12 +11,12 @@ exports.insertCapsule = async (userId, data) => {
         longitude: data.longitude,
         code: code,
     });
-    Member.create({
+    await Member.create({
         capsule_id: capsule.dataValues.id,
         user_id: userId,
         location_verified: 0,
     });
-    return code;
+    return capsule;
 };
 
 exports.validateCode = async (capsuleId, userCode) => {
@@ -64,4 +64,28 @@ exports.selectCapsule = async (userId, capsuleId) => {
 exports.updateAuthTime = async (capsule, authTime) => {
     capsule.auth_time = authTime;
     capsule.save();
+};
+
+exports.deleteCapsule = async (capsule) => {
+    TextItem.destroy({
+        where: {
+            capsule_id: capsule.id,
+        },
+    });
+    PhotoItem.destroy({
+        where: {
+            capsule_id: capsule.id,
+        },
+    });
+    capsule.destroy();
+};
+
+exports.hasItem = async (capsuleId) => {
+    const capsule = await Capsule.findByPk(capsuleId, {
+        include: [
+            { model: TextItem, required: false },
+            { model: PhotoItem, required: false },
+        ],
+    });
+    return !!(capsule && (capsule.TextItems.length > 0 || capsule.PhotoItems.length > 0));
 };

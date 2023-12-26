@@ -27,3 +27,13 @@ exports.insertMember = async (userId, capsuleId, code) => {
         location_verified: 0,
     });
 };
+
+exports.hasUnverifiedMember = async (capsuleId) => {
+    const member = await Member.findOne({
+        where: {
+            capsule_id: capsuleId,
+            location_verified: 0,
+        },
+    });
+    return !!member;
+};

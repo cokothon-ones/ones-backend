@@ -1,18 +1,61 @@
 const { status } = require('../config/response.status');
 const { BaseError } = require('../config/error');
 
-const { insertCapsule, selectAllCapsule, selectCapsule, updateAuthTime } = require('../daos/capsule.dao');
+const {
+    insertCapsule,
+    selectAllCapsule,
+    selectCapsule,
+    updateAuthTime,
+    deleteCapsule,
+    hasItem,
+} = require('../daos/capsule.dao');
+const { hasUnverifiedMember } = require('../daos/member.dao');
 const { findCapsuleResponseDTO } = require('../dtos/find-capsule.dto');
 
 exports.createCapsule = async (userId, body) => {
     try {
-        const code = await insertCapsule(userId, body);
-        //캡슐 잠금 시간이 되었을 때 item이 0개라면 삭제
-        //캡슐 오픈 달이 지났는데 캡슐을 오픈하지 않았다면 삭제
-        return code;
+        const capsule = await insertCapsule(userId, body);
+
+        setTimeout(() => {
+            deleteEmptyCapsule(capsule);
+        }, capsule.createdAt.getTime() + 24 * 60 * 60 * 1000 - Date.now());
+        setTimeout(() => {
+            deleteExpiredCapsule(capsule);
+        }, calculateNextMonth(new Date(capsule.date)) - Date.now());
+
+        return capsule.dataValues.code;
     } catch (err) {
         console.error(err);
         throw new BaseError(status.INTERNAL_SERVER_ERROR);
+    }
+};
+
+const calculateNextMonth = (date) => {
+    const nextMonthDate = new Date(date);
+    nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
+    nextMonthDate.setDate(1);
+    return nextMonthDate.getTime();
+};
+
+const deleteEmptyCapsule = async (capsule) => {
+    try {
+        const existent = await hasItem(capsule.id);
+        if (!existent) {
+            deleteCapsule(capsule);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const deleteExpiredCapsule = async (capsule) => {
+    try {
+        const unverified = await hasUnverifiedMember(capsule.id);
+        if (unverified) {
+            deleteCapsule(capsule);
+        }
+    } catch (err) {
+        console.log(err);
     }
 };
 
@@ -30,7 +73,6 @@ exports.findCapsule = async (userId) => {
 exports.updateCapsule = async (userId, body) => {
     try {
         const capsule = await selectCapsule(userId, body.capsuleId);
-        console.log(capsule);
         if (capsule === null) {
             throw new BaseError(status.INVALID_MEMBER_ERROR);
         }
