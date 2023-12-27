@@ -33,7 +33,7 @@ const uploadPhoto = (req, res) => {
       .then(() => {
         const photoUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
         // res.json({ success: true, photoUrl, photoItem: createdPhotoItem });
-        makePhotoItem(req, res);
+        makePhotoItem(req, res, photoUrl);
       })
       .catch((uploadError) => {
         console.error(uploadError);

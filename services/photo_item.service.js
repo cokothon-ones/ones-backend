@@ -3,9 +3,9 @@ const { BaseError } = require("../config/error.js");
 
 const { insertPhotoItem } = require("../daos/photo_item.dao");
 
-const createPhotoItem = async (userId, body) => {
+const createPhotoItem = async (userId, body, photoUrl) => {
   try {
-    const item = await insertPhotoItem(userId, body.capsuleId, body.data);
+    const item = await insertPhotoItem(userId, body.capsule_id, photoUrl);
     return;
   } catch (err) {
     console.error(err);
