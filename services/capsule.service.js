@@ -9,7 +9,7 @@ const {
     deleteCapsule,
     hasItem,
 } = require('../daos/capsule.dao');
-const { hasUnverifiedMember } = require('../daos/member.dao');
+const { hasUnverifiedMember, updateLocationVerified } = require('../daos/member.dao');
 const { findCapsuleResponseDTO } = require('../dtos/find-capsule.dto');
 
 exports.createCapsule = async (userId, body) => {
@@ -82,6 +82,7 @@ exports.updateCapsule = async (userId, body) => {
             throw new BaseError(status.INSUFFICIENT_AUTHTIME_DIFFERENCE_ERROR);
         }
         await updateAuthTime(capsule, body.authTime);
+        await updateLocationVerified(capsule.dataValues.id);
         return;
     } catch (err) {
         console.error(err);

@@ -37,3 +37,15 @@ exports.hasUnverifiedMember = async (capsuleId) => {
     });
     return !!member;
 };
+
+exports.updateLocationVerified = async (capsuleId) => {
+    console.log(capsuleId);
+    await Member.update(
+        { location_verified: 0 },
+        {
+            where: {
+                capsule_id: capsuleId,
+            },
+        }
+    );
+};
