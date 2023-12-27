@@ -59,16 +59,17 @@ exports.selectPhotoItem = async (capsuleId) => {
     where: {
       id: capsuleId,
     },
-    attributes: { data },
+    attributes: ["data"],
   });
 };
+[];
 
 exports.selectTextItem = async (capsuleId) => {
   return TextItem.findOne({
     where: {
       id: capsuleId,
     },
-    attributes: { data },
+    attributes: ["data"],
   });
 };
 
