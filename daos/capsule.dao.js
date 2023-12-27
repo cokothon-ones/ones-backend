@@ -62,13 +62,13 @@ exports.selectPhotoItem = async (capsuleId) => {
     attributes: ["data"],
   });
 };
-[];
 
 exports.selectTextItem = async (capsuleId) => {
   return TextItem.findOne({
     where: {
       id: capsuleId,
     },
+
     attributes: ["data"],
   });
 };
