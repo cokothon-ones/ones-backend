@@ -59,7 +59,7 @@ exports.selectPhotoItem = async (capsuleId) => {
     where: {
       id: capsuleId,
     },
-    attributes: { data },
+    attributes: ["data"],
   });
 };
 
@@ -68,7 +68,8 @@ exports.selectTextItem = async (capsuleId) => {
     where: {
       id: capsuleId,
     },
-    attributes: { data },
+
+    attributes: ["data"],
   });
 };
 

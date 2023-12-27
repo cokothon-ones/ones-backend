@@ -8,7 +8,7 @@ const makePhotoItem = async (req, res, photoUrl, next) => {
   res.send(
     response(
       status.SUCCESS,
-      await createTextItem(req.user.id, req.body, photoUrl)
+      await createPhotoItem(req.user.id, req.body, photoUrl)
     )
   );
 };
