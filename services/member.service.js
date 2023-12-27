@@ -1,5 +1,6 @@
 const { status } = require("../config/response.status");
 const { BaseError } = require("../config/error.js");
+const { Member } = require("../models");
 
 const {
   insertMember,
@@ -7,7 +8,7 @@ const {
   isMember,
   hasUnverifiedMember,
 } = require("../daos/member.dao");
-const { findCapsule } = require("../services/capsule.service");
+const { selectCapsule } = require("../daos/capsule.dao.js");
 
 const createMember = async (userId, params, body) => {
   try {
@@ -23,22 +24,34 @@ const createMember = async (userId, params, body) => {
 
 const validateLocation = async (userId, body) => {
   try {
-    const { latitude, longitude } = findCapsule(userId);
+    /*const capsule = await selectCapsule(userId, body.capsuleId);
+
+    if (capsule === null) {
+      throw new BaseError(status.INVALID_MEMBER_ERROR);
+    }
 
     const within500m = isWithin500m(
       body.latitude,
       body.longitude,
-      latitude,
-      longitude
+      capsule.dataValues.latitude,
+      capsule.dataValues.longitude
     );
 
-    if (within500m) {
-      const trueMember = await isMember(userId, body.capsuleId);
-
-      await checkEachLocation(trueMember);
+    if (!within500m) {
+      throw new BaseError(status.INVALID_CODE_ERROR);
     }
 
-    return !hasUnverifiedMember(body.capsuleId);
+    const member = await Member.findOne({
+      where: {
+        capsule_id: body.capsuleId,
+        user_id: userId,
+      },
+    });
+
+    await checkEachLocation(member); */
+
+    const result = await hasUnverifiedMember(body.capsuleId);
+    return !result;
   } catch (err) {
     console.error(err);
     if (err instanceof BaseError) {

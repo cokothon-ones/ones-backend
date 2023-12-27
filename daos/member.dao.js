@@ -28,23 +28,10 @@ exports.insertMember = async (userId, capsuleId, code) => {
   });
 };
 
-exports.isMember = async (userId, capsuleId) => {
-  const member = await Member.findOne({
-    raw: true,
-    where: {
-      capsule_id: capsuleId,
-      user_id: userId,
-    },
-  });
-  if (!member) {
-    throw new BaseError(status.INVALID_CODE_ERROR);
-  }
-
-  return member.id;
-};
-
-exports.checkEachLocation = async (memberId) => {
-  await Member.update({ valid: 1 }, { where: { id: memberId } });
+exports.checkEachLocation = async (member) => {
+  console.log(member);
+  member.location_verified = 1;
+  member.save();
 };
 
 exports.hasUnverifiedMember = async (capsuleId) => {
@@ -54,15 +41,6 @@ exports.hasUnverifiedMember = async (capsuleId) => {
       location_verified: 0,
     },
   });
-  return !!member;
-};
 
-exports.hasUnverifiedMember = async (capsuleId) => {
-    const member = await Member.findOne({
-        where: {
-            capsule_id: capsuleId,
-            location_verified: 0,
-        },
-    });
-    return !!member;
+  return !!member;
 };
