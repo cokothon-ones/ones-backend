@@ -3,16 +3,14 @@ const { status } = require('../config/response.status');
 
 const { createCapsule, findCapsule, updateCapsule } = require('../services/capsule.service');
 
-const makeCapsule = async (req, res, next) => {
+exports.makeCapsule = async (req, res, next) => {
     res.send(response(status.SUCCESS, await createCapsule(req.user.id, req.body)));
 };
 
-const fetchCapsule = async (req, res, next) => {
+exports.fetchCapsule = async (req, res, next) => {
     res.send(response(status.SUCCESS, await findCapsule(req.user.id)));
 };
 
-const authCapsule = async (req, res, next) => {
-    res.send(response(status.SUCCESS, await updateCapsule(req.body)));
+exports.authCapsule = async (req, res, next) => {
+    res.send(response(status.SUCCESS, await updateCapsule(req.user.id, req.body)));
 };
-
-module.exports = { makeCapsule, fetchCapsule };

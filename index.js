@@ -14,6 +14,16 @@ const itemRouter = require("./routes/item.route.js");
 
 dotenv.config();
 
+// 로그인 관련
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const passport = require("passport");
+const passportConfig = require("./passport");
+passportConfig();
+
+// routes 불러오기
+const authRouter = require("./routes/auth.route.js");
+
 const app = express();
 
 app.set("port", process.env.PORT || 3000);
@@ -29,8 +39,23 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(
+  session({
+    secret: "SESSION_SECRET",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
 
-// app.use('/user', userRouter);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/auth", authRouter);
 app.use("/capsule", calsuleRouter);
 app.use("/member", memberRouter);
 app.use("/item", itemRouter);

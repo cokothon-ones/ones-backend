@@ -4,16 +4,16 @@ const { BaseError } = require('../config/error');
 
 const { validateCode } = require('./capsule.dao');
 
-exports.insertMember = async (userId, capsuleId, code) => {
-    const isValid = await validateCode(capsuleId, code);
-    if (!isValid) {
+exports.insertMember = async (userId, code) => {
+    const capsule = await validateCode(code);
+    if (!capsule) {
         throw new BaseError(status.INVALID_CODE_ERROR);
     }
 
     const member = await Member.findOne({
         raw: true,
         where: {
-            capsule_id: capsuleId,
+            capsule_id: capsule.id,
             user_id: userId,
         },
     });
@@ -22,8 +22,18 @@ exports.insertMember = async (userId, capsuleId, code) => {
     }
 
     return Member.create({
-        capsule_id: capsuleId,
+        capsule_id: capsule.id,
         user_id: userId,
         location_verified: 0,
     });
+};
+
+exports.hasUnverifiedMember = async (capsuleId) => {
+    const member = await Member.findOne({
+        where: {
+            capsule_id: capsuleId,
+            location_verified: 0,
+        },
+    });
+    return !!member;
 };

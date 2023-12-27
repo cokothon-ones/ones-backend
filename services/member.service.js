@@ -3,9 +3,9 @@ const { BaseError } = require('../config/error.js');
 
 const { insertMember } = require('../daos/member.dao');
 
-const createMember = async (userId, params, body) => {
+const createMember = async (userId, body) => {
     try {
-        const member = await insertMember(userId, params.capsuleId, body.code);
+        await insertMember(userId, body.code);
         return;
     } catch (err) {
         console.error(err);

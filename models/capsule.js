@@ -47,8 +47,8 @@ class Capsule extends Sequelize.Model {
     }
     static associate(db) {
         db.Capsule.hasMany(db.Member, { foreignKey: 'capsule_id' });
-        // db.Capsule.hasMany(db.TextItem, { foreignKey: 'capsule_id' });
-        // db.Capsule.hasMany(db.PhotoItem, { foreignKey: 'capsule_id' });
+        db.Capsule.hasMany(db.TextItem, { foreignKey: 'capsule_id' });
+        db.Capsule.hasMany(db.PhotoItem, { foreignKey: 'capsule_id' });
     }
 }
 
