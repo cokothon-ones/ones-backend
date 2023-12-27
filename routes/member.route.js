@@ -8,7 +8,7 @@ const {
 
 const memberRouter = express.Router();
 
-memberRouter.post("/:capsuleId", asyncHandler(addMember));
 memberRouter.patch("/auth", asyncHandler(authLocation));
+memberRouter.post("/", asyncHandler(addMember));
 
 module.exports = memberRouter;

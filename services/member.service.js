@@ -10,9 +10,9 @@ const {
 } = require("../daos/member.dao");
 const { selectCapsule } = require("../daos/capsule.dao.js");
 
-const createMember = async (userId, params, body) => {
+const createMember = async (userId, body) => {
   try {
-    const member = await insertMember(userId, params.capsuleId, body.code);
+    await insertMember(userId, body.code);
     return;
   } catch (err) {
     console.error(err);
@@ -21,10 +21,9 @@ const createMember = async (userId, params, body) => {
     }
   }
 };
-
 const validateLocation = async (userId, body) => {
   try {
-    /*const capsule = await selectCapsule(userId, body.capsuleId);
+    const capsule = await selectCapsule(userId, body.capsuleId);
 
     if (capsule === null) {
       throw new BaseError(status.INVALID_MEMBER_ERROR);
@@ -48,7 +47,7 @@ const validateLocation = async (userId, body) => {
       },
     });
 
-    await checkEachLocation(member); */
+    await checkEachLocation(member);
 
     const result = await hasUnverifiedMember(body.capsuleId);
     return !result;

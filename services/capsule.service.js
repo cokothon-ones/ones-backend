@@ -1,5 +1,7 @@
 const { status } = require("../config/response.status");
 const { BaseError } = require("../config/error");
+const { photo_item } = require("../models/photo_item");
+const { text_item } = require("../models/text_item");
 
 const {
   insertCapsule,
@@ -8,6 +10,8 @@ const {
   updateAuthTime,
   deleteCapsule,
   hasItem,
+  selectTextItem,
+  selectPhotoItem,
 } = require("../daos/capsule.dao");
 const { hasUnverifiedMember } = require("../daos/member.dao");
 const { findCapsuleResponseDTO } = require("../dtos/find-capsule.dto");
@@ -72,6 +76,18 @@ exports.findCapsule = async (userId) => {
 
 exports.findItem = async (capsuleId) => {
   try {
+    const result = await hasUnverifiedMember(capsuleId);
+    if (result) {
+      throw new BaseError(status.INVALID_CODE_ERROR);
+    }
+
+    const photo = await selectPhotoItem(capsuleId);
+    const text = await selectTextItem(capsuleId);
+
+    return {
+      photo,
+      text,
+    };
   } catch (err) {
     console.error(err);
     throw new BaseError(status.INTERNAL_SERVER_ERROR);
